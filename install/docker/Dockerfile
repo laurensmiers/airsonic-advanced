@@ -14,6 +14,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common && \
     apt-get update && \
     apt-get install -y ffmpeg \
+                       wget \
                        x264 \
                        x265 \
                        lame \
@@ -26,7 +27,9 @@ RUN chmod +x /usr/local/bin/run.sh
 COPY entry.sh /usr/local/bin/entry.sh
 RUN chmod +x /usr/local/bin/entry.sh
 
-COPY target/dependency/airsonic-main.war airsonic.war
+COPY get_latest_release.sh get_latest_release.sh
+RUN chmod +x get_latest_release.sh
+RUN ./get_latest_release.sh
 
 EXPOSE $AIRSONIC_PORT
 
